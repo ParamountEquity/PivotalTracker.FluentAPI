@@ -1,0 +1,37 @@
+#ignore thumbnails created by windows
+Thumbs.db
+desktop.ini
+
+#Ignore files build by Visual Studio
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+*.sbr
+*.sdf
+*.opensdf
+*.tss
+bin
+obj/
+_ReSharper*/
+ipch/
+*.lnt
+*.vloptions
+*.project
+*.GDFMakerProject
+enc_temp_folder
+#Ignore default Visual Studio build folders
+[Dd]ebug/
+[Rr]elease/
+*.Publish.xml
