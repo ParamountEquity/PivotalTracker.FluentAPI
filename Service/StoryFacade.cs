@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using PivotalTracker.FluentAPI.Domain;
 using PivotalTracker.FluentAPI.Repository;
 
@@ -56,6 +57,49 @@ namespace PivotalTracker.FluentAPI.Service
         {
             var note = _storyRepository.AddNote(this.Item.ProjectId, this.Item.Id, text);
             this.Item.Notes.Add(note);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a task to the managed story
+        /// </summary>
+        /// <param name="description">text of the task</param>
+        /// <returns>This</returns>
+        public StoryFacade<TParent> AddTask(string description)
+        {
+            var task = _storyRepository.AddTask(Item.ProjectId, Item.Id, description);
+            Item.Tasks.Add(task);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a task to the managed story
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="isCompleted">true if the task is completed, false otherwise.</param>
+        /// <param name="description">text of the task</param>
+        /// <returns>This</returns>
+        public StoryFacade<TParent> UpdateTask(int id, bool isCompleted, string description)
+        {
+            _storyRepository.UpdateTask(Item.ProjectId, Item.Id, id, isCompleted, description);
+
+            // Update task
+            var oldTask = Item.Tasks.Single(t => t.Id == id);
+            oldTask.Description = description;
+            oldTask.IsCompleted = isCompleted;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Remove a task from the managed story
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>This</returns>
+        public StoryFacade<TParent> RemoveTask(int id)
+        {
+            var task = _storyRepository.RemoveTask(Item.ProjectId, Item.Id, id);
+            Item.Tasks.Remove(task);
             return this;
         }
 

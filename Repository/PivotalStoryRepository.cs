@@ -100,6 +100,13 @@ namespace PivotalTracker.FluentAPI.Repository
 		}
 
 		[XmlRoot("task")]
+		public class StoryTaskXmlRequest
+		{
+			public string description { get; set; }
+			public string complete { get; set; }
+		}
+
+		[XmlRoot("task")]
 		public class StoryTaskXmlResponse
 		{
 			public int id { get; set; }
@@ -168,6 +175,18 @@ namespace PivotalTracker.FluentAPI.Repository
 				}));
 
 			return lStory;
+		}
+
+		internal static Task CreateTask(StoryTaskXmlResponse e)
+		{
+			return new Task
+				{
+					Id = e.id,
+					Description = e.description,
+					Position = e.position,
+					IsCompleted = e.complete,
+					CreatedDate = e.created_at == null ? null : e.created_at.DateTime
+				};
 		}
 
 		public IEnumerable<Story> GetStories(string url, string method="GET")
@@ -273,6 +292,35 @@ namespace PivotalTracker.FluentAPI.Repository
 						   };
 			return note;
 
+		}
+
+		public Task AddTask(int projectId, int storyId, string text)
+		{
+			var path = string.Format("/projects/{0}/stories/{1}/tasks", projectId, storyId);
+			var taskReq = new StoryTaskXmlRequest { description = text };
+
+			var taskResp = this.RequestPivotal<StoryTaskXmlResponse>(path, taskReq, "POST");
+			return CreateTask(taskResp);
+		}
+
+		public Task UpdateTask(int projectId, int storyId, int taskId, bool isCompleted, string text)
+		{
+			var path = string.Format("/projects/{0}/stories/{1}/tasks/{2}", projectId, storyId, taskId);
+			var taskReq = new StoryTaskXmlRequest
+				{
+					description = text,
+					complete = isCompleted ? "true" : "false"
+				};
+
+			var taskResp = this.RequestPivotal<StoryTaskXmlResponse>(path, taskReq, "PUT");
+			return CreateTask(taskResp);
+		}
+
+		public Task RemoveTask(int projectId, int storyId, int taskId)
+		{
+			var path = string.Format("/projects/{0}/stories/{1}/tasks/{2}", projectId, storyId, taskId);
+			var taskResp = RequestPivotal<StoryTaskXmlResponse>(path, null, "DELETE");
+			return CreateTask(taskResp);
 		}
 
 		public Story DeleteStory(int projectId, int storyId)
