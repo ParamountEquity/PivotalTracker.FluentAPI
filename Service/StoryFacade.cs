@@ -34,13 +34,19 @@ namespace PivotalTracker.FluentAPI.Service
         /// <returns>This</returns>
         public StoryFacade<TParent> Update(Action<Story> updater)
         {
-            updater(this.Item);
-           
-            this.Item = _storyRepository.UpdateStory(this.Item);
+            updater(Item);
+
+            // Check if we can estimate bugs and chores
+            var isBugAndChoresEstimables = false;
+            var parent = ParentFacade as StoriesProjectFacade;
+            if (parent != null)
+                isBugAndChoresEstimables = parent.ParentFacade.Item.IsBugAndChoresEstimables;
+
+            Item = _storyRepository.UpdateStory(Item, isBugAndChoresEstimables);
 
             return this;
         }
- 
+
         /// <summary>
         /// Add a note to the managed story
         /// </summary>
@@ -52,7 +58,7 @@ namespace PivotalTracker.FluentAPI.Service
             this.Item.Notes.Add(note);
             return this;
         }
-        
+
         /// <summary>
         /// Delete the managed StoryFacade
         /// </summary>
@@ -89,7 +95,7 @@ namespace PivotalTracker.FluentAPI.Service
         public StoryFacade<TParent> UploadAttachment(Action<Story, Stream> action, string fileName = "upload", string contentType = "application/octet-stream")
         {
             using (var stream = new MemoryStream())
-            {   
+            {
                 action(this.Item, stream);
                 _attachRepository.UploadAttachment(this.Item.ProjectId, this.Item.Id, stream.ToArray(), fileName, contentType);
 

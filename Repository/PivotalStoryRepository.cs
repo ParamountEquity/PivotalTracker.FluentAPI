@@ -218,7 +218,7 @@ namespace PivotalTracker.FluentAPI.Repository
 
 		}
 
-		public Story UpdateStory(Story story)
+		public Story UpdateStory(Story story, bool isBugAndChoresEstimables)
 		{
 			var path = string.Format("/projects/{0}/stories/{1}", story.ProjectId, story.Id);
 			var s = new StoryXmlRequest
@@ -231,8 +231,26 @@ namespace PivotalTracker.FluentAPI.Repository
 							story_type = story.Type.ToString().ToLowerInvariant(),
 							requested_by = story.RequestedBy,
 						};
+
+			// Check if we should set an estimate
 			if (story.Estimate >= -1)
-				s.estimate = story.Estimate;
+			{
+				switch (story.Type)
+				{
+					case StoryTypeEnum.Chore:
+					case StoryTypeEnum.Bug:
+						if (isBugAndChoresEstimables)
+							s.estimate = story.Estimate;
+						else
+							s.estimate = -1;
+						break;
+
+					default:
+						s.estimate = story.Estimate;
+						break;
+				}
+			}
+
 
 			var e = this.RequestPivotal<StoryXmlResponse>(path, s, "PUT");
 			return CreateStory(e);
