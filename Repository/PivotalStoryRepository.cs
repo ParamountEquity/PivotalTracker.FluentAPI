@@ -111,7 +111,7 @@ namespace PivotalTracker.FluentAPI.Repository
 		{
 			public int id { get; set; }
 			public string description { get; set; }
-			public int position { get; set; }
+			public string position { get; set; }
 			public bool complete { get; set; }
 			public DateTimeUTC created_at { get; set; }
 		}

@@ -98,8 +98,11 @@ namespace PivotalTracker.FluentAPI.Service
         /// <returns>This</returns>
         public StoryFacade<TParent> RemoveTask(int id)
         {
+            var oldTask = Item.Tasks.Single(t => t.Id == id);
             var task = _storyRepository.RemoveTask(Item.ProjectId, Item.Id, id);
-            Item.Tasks.Remove(task);
+
+            Item.Tasks.Remove(oldTask);
+
             return this;
         }
 
