@@ -36,8 +36,8 @@ namespace PivotalTracker.FluentAPI.Service
         /// <remarks>Not yet implemented</remarks>
         public IterationsFacade Iterations()
         {
-            throw new NotImplementedException();
-            
+            var lFacade = new IterationsFacade(this);
+            return lFacade;
         }
 
         /// <summary>

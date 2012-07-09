@@ -78,16 +78,16 @@ namespace PivotalTracker.FluentAPI.Repository
 		protected static Project CreateProject(ProjectXmlResponse e)
 		{
 			var lProject = new Project();
-			lProject.Account = e.account;
-			lProject.CurrentVelocity = e.current_velocity;
-			lProject.Id = e.id;
-			lProject.InitialVelocity = e.initial_velocity;
-			lProject.IsAttachmentAllowed = e.allow_attachments;
-			lProject.IsBugAndChoresEstimables = e.bugs_and_chores_are_estimatable;
-			lProject.IsCommitModeActive = e.commit_mode;
-			lProject.IsPublic = e.@public;
-			lProject.IterationLength = e.iteration_length;
-			if (e.labels != null) e.labels.Split(',').ToList().ForEach(i => lProject.Labels.Add(i.Trim()));
+		    lProject.Account = e.account;
+		    lProject.CurrentVelocity = e.current_velocity;
+		    lProject.Id = e.id;
+		    lProject.InitialVelocity = e.initial_velocity;
+		    lProject.IsAttachmentAllowed = e.allow_attachments;
+		    lProject.IsBugAndChoresEstimables = e.bugs_and_chores_are_estimatable;
+		    lProject.IsCommitModeActive = e.commit_mode;
+		    lProject.IsPublic = e.@public;
+		    lProject.IterationLength = e.iteration_length;
+		    if (e.labels != null) e.labels.Split(',').ToList().ForEach(i => lProject.Labels.Add(i.Trim()));
 			lProject.StartDate = e.first_iteration_start_time;
 			if (e.last_activity_at != null) lProject.LastActivityDate = e.last_activity_at;
 			lProject.Name = e.name;
@@ -115,18 +115,16 @@ namespace PivotalTracker.FluentAPI.Repository
 			const string path = "/projects";
 			var e = this.RequestPivotal<ProjectsXmlResponse>(path, null, "GET");
 
-			return e.projects.Select(p => PivotalProjectRepository.CreateProject(p)).ToList();
-
+			return e.projects.Select(PivotalProjectRepository.CreateProject).ToList();
 		}
+
 
 		public Project CreateProject(Repository.PivotalProjectRepository.ProjectXmlRequest projectRequest)
 	   {
 			var path = string.Format("/projects");
 
-
 			var e = this.RequestPivotal<ProjectXmlResponse>(path, projectRequest, "POST");
 			return PivotalProjectRepository.CreateProject(e);
-
 		}
 
 
