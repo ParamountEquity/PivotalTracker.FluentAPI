@@ -19,6 +19,11 @@ namespace PivotalTracker.FluentAPI.Service
         }
 
 
+        public IEnumerable<Membership> GetAll()
+        {
+            return _repository.GetAllMemberships(ParentFacade.Item.Id);
+        }
+
         /// <summary>
         /// Apply an action on the loaded membership list
         /// </summary>
