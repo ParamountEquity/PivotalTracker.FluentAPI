@@ -54,8 +54,7 @@ namespace PivotalTracker.FluentAPI.Repository
         {
             var path = string.Format("/projects/{0}/memberships", membership.ProjectRef.Id);
             var result = this.RequestPivotal<Membership>(path, membership, "POST");
-
-
+            
             return result;
 
         }
@@ -63,7 +62,7 @@ namespace PivotalTracker.FluentAPI.Repository
         public Membership RemoveMembership(int projectId, int membershipId)
         {
             var path = string.Format("/projects/{0}/memberships/{1}", projectId, membershipId, "DELETE");
-            var membership = this.RequestPivotal<Membership>(path, null, "GET");
+            var membership = this.RequestPivotal<Membership>(path, null, "DELETE");
 
 
             return membership;
