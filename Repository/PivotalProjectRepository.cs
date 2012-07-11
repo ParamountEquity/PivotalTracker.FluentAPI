@@ -110,6 +110,11 @@ namespace PivotalTracker.FluentAPI.Repository
 			return lProject;
 		}
 
+        /// <summary>
+        /// Note: the memberships returned from PT for this method seem to be cached for one or more minutes. To
+        /// get up-to-date memberships for a project, fetch that project use GetProject(id)
+        /// </summary>
+        /// <returns></returns>
 		public IEnumerable<Project> GetProjects()
 		{
 			const string path = "/projects";

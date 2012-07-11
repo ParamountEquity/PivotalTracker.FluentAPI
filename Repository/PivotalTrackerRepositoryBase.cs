@@ -52,12 +52,12 @@ namespace PivotalTracker.FluentAPI.Repository
             while(nTries > 0)
             {
                 Uri lUri = GetPivotalURI(path);
-                WebRequest lRequest;
 
-                lRequest = WebRequest.Create(lUri);
+                WebRequest lRequest = WebRequest.Create(lUri);
                 lRequest.Headers.Add("X-TrackerToken", this.Token.ApiKey);
                 lRequest.ContentType = "application/xml";
                 lRequest.Method = method;
+
                 string debug = "";
                 if (data != null)
                     using (var stream = new MemoryStream())
