@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Xml.Linq" />
@@ -62,6 +63,8 @@
     <Compile Include="Domain\StoryTypeEnum.cs" />
     <Compile Include="Domain\Task.cs" />
     <Compile Include="Domain\Token.cs" />
+    <Compile Include="Exceptions\PivotalApiConfigException.cs" />
+    <Compile Include="Exceptions\PivotalApiException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DateTimeUTC.cs" />
     <Compile Include="Repository\IPivotalTrackerRepository.cs" />
@@ -90,6 +93,7 @@
     <Compile Include="Service\StoryCreationFacade.cs" />
     <Compile Include="Service\StoryFacade.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

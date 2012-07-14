@@ -8,6 +8,8 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using PivotalTracker.FluentAPI.Domain;
+using System.Configuration;
+using PivotalTracker.FluentAPI.Exceptions;
 
 namespace PivotalTracker.FluentAPI.Repository
 {
@@ -46,6 +48,19 @@ namespace PivotalTracker.FluentAPI.Repository
         protected T RequestPivotal<T>(string path, dynamic data, string method = "POST")
             where T : class
         {
+            // check that the method is allowed in config
+            try
+            {
+                var allowedMethods = ConfigurationManager.AppSettings.Get("PivotalApiAllowedMethods").Split(',');
+                if(!allowedMethods.Contains(method.ToUpper()))
+                    throw new PivotalApiException("Requested HTTP Method " + method + " not specified in config.");
+            }
+            catch (Exception)
+            {
+                throw new PivotalApiConfigException("PivotalApiAllowedMethods not set in config.");
+            }
+
+
             //Sometimes Pivotal Fails, so let's retry several times
             int nTries = 2;
 
