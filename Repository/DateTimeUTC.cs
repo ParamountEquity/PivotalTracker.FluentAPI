@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Text.RegularExpressions;
@@ -115,13 +111,14 @@ namespace PivotalTracker.FluentAPI.Repository
 			// The purpose of the [+]*? at the beginning of the
 			// regex is to account for, and ignore, any leading + sign).
 
-			string ts = Regex.Replace(GetTimeZoneOffset(timeZoneId),
-			@"^[+]*?(?<hours>[-]?\d\d)(?<minutes>\d\d)$",
-			"${hours}:${minutes}:00");
+			var offset = GetTimeZoneOffset(timeZoneId);
+			if (String.IsNullOrEmpty(offset))
+				throw new InvalidTimeZoneException(String.Format("Unknown time zone: {0}", timeZoneId));
+
+			string ts = Regex.Replace(offset, @"^[+]*?(?<hours>[-]?\d\d)(?<minutes>\d\d)$", "${hours}:${minutes}:00");
 			TimeSpan timeZoneOffset = TimeSpan.Parse(ts);
 
-			TimeSpan localUtcOffset =
-			TimeZone.CurrentTimeZone.GetUtcOffset(System.DateTime.Now);
+			TimeSpan localUtcOffset = TimeZone.CurrentTimeZone.GetUtcOffset(System.DateTime.Now);
 
 			// Get the absolute time difference between the given
 			// datetime's time zone and the local datetime's time zone.
@@ -196,6 +193,7 @@ namespace PivotalTracker.FluentAPI.Repository
 			new string[] {"CDT", "-0500", "(US) Central Daylight"},
 			new string[] {"CED", "+0200", "Central European Daylight"},
 			new string[] {"CET", "+0100", "Central European"},
+			new string[] {"CEST", "+0200", "Central European Summer"},
 			new string[] {"CST", "-0600", "(US) Central Standard"},
 			new string[] {"CENTRAL", "-0600", "(US) Central Standard"},
 			new string[] {"EAST", "+1000", "Eastern Australian Standard"},
