@@ -1,6 +1,10 @@
-# What is it ?
+#Pivotal Tracker FluentAPI
+_http://linkedintoolkit.codeplex.com_
+
+## What is it ?
 Pivotal Tracker FluentAPI is C# API that uses the Fluent pattern to connect to the PivotalTracker REST API.
-# How to use it ?
+
+## How to use it ?
 
 First create the Pivotal Tracker Facade
 
