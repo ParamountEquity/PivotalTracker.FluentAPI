@@ -244,7 +244,7 @@ namespace PivotalTracker.FluentAPI.Repository
 						{
 							current_state = story.CurrentState.ToString().ToLowerInvariant(),
 							description = story.Description,
-							labels = story.Labels.Count == 0 ? "" : story.Labels.Aggregate((a, b) => a+b),
+							labels = story.Labels.Count == 0 ? "" : story.Labels.Aggregate((a, b) => a + ", " + b),
 							name = story.Name,
 							owned_by = story.OwnedBy,
 							story_type = story.Type.ToString().ToLowerInvariant(),
