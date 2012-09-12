@@ -1,3 +1,11 @@
+This is [ObjectiveArch](http://www.objectivearch.com/,"Visit Objective Arch's website")'s fork 
+of the PivotalTracker Fluent API for C#. It was forked from the 
+[powerinbox project](https://github.com/powerinbox/PivotalTracker.FluentAPI) of the same name, 
+which is itself a fork of a [Plasmasoft project](http://ptfluentapi.codeplex.com/) on CodePlex.
+
+The main changes in this fork are in the repository classes beneath the fluent layer; the repositories
+have been extended and fixed in a few places where needed by ObjectiveArch's [TeamTracker](http://apps.objectivearch.com/teamtracker).
+
 # What is it ?
 Pivotal Tracker FluentAPI is C# API that uses the Fluent pattern to connect to the PivotalTracker REST API.
 # How to use it ?
