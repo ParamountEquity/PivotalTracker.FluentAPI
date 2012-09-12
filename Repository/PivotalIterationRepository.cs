@@ -60,7 +60,8 @@ namespace PivotalTracker.FluentAPI.Repository
                     Finish = e.finish, 
                     Id = e.id, 
                     Number = e.number, 
-                    Start = e.start
+                    Start = e.start,
+                    Team_Strength = e.team_strength
                 };
 
             if (e.stories != null && e.stories.stories!=null)
@@ -76,6 +77,11 @@ namespace PivotalTracker.FluentAPI.Repository
         }
 
        
+        /// <summary>
+        /// Retrieve iterations from pivotal; this will return all iterations, past present and future
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
         public IEnumerable<Iteration> GetIterations(int projectId)
         {
             var path = string.Format("/projects/{0}/iterations", projectId);

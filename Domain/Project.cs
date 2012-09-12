@@ -31,7 +31,19 @@ namespace PivotalTracker.FluentAPI.Domain
         public bool UseHTTPS { get; set; }
         public bool IsBugAndChoresEstimables { get; set; }
         public bool IsCommitModeActive { get; set; }
-        public DateTime StartDate { get; set; }
+
+        private DateTime _startDate;
+
+        /// <summary>
+        /// Startdate is set to midnight on the set date
+        /// </summary>
+        public DateTime StartDate
+        {
+            get { return _startDate.Date; }
+            set { _startDate = value.Date; }
+        }
+        
+        
         public DateTime LastActivityDate { get; set; }
         public IList<Integration> Integrations { get; private set; }
         public IList<Membership> Memberships { get; set; }

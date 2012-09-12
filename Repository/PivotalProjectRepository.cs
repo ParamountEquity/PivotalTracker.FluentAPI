@@ -68,48 +68,16 @@ namespace PivotalTracker.FluentAPI.Repository
 		{
 		}
 
-		public Project GetProject(int id)
+        #region read
+
+        public Project GetProject(int id)
 		{
 			var path = string.Format("/projects/{0}", id);
 			var e = this.RequestPivotal<ProjectXmlResponse>(path, null, "GET");
 			return PivotalProjectRepository.CreateProject(e);
 		}
 
-		protected static Project CreateProject(ProjectXmlResponse e)
-		{
-			var lProject = new Project();
-		    lProject.Account = e.account;
-		    lProject.CurrentVelocity = e.current_velocity;
-		    lProject.Id = e.id;
-		    lProject.InitialVelocity = e.initial_velocity;
-		    lProject.IsAttachmentAllowed = e.allow_attachments;
-		    lProject.IsBugAndChoresEstimables = e.bugs_and_chores_are_estimatable;
-		    lProject.IsCommitModeActive = e.commit_mode;
-		    lProject.IsPublic = e.@public;
-		    lProject.IterationLength = e.iteration_length;
-		    if (e.labels != null) e.labels.Split(',').ToList().ForEach(i => lProject.Labels.Add(i.Trim()));
-			lProject.StartDate = e.first_iteration_start_time;
-			if (e.last_activity_at != null) lProject.LastActivityDate = e.last_activity_at;
-			lProject.Name = e.name;
-			lProject.NumberOfDoneIterationsToShow = e.number_of_done_iterations_to_show;
-			lProject.PointScale = e.point_scale;
-			lProject.UseHTTPS = e.use_https;
-			lProject.VelocityScheme = e.velocity_scheme;
-			lProject.WeekStartDay = e.week_start_day;
-
-			foreach (var i in e.integrations)
-				lProject.Integrations.Add(i);
-
-			foreach (var m in e.memberships)
-			{
-				m.ProjectRef.Name = lProject.Name;
-				m.ProjectRef.Id = lProject.Id;
-				lProject.Memberships.Add(m);
-			}
-
-			return lProject;
-		}
-
+        
         /// <summary>
         /// Note: the memberships returned from PT for this method seem to be cached for one or more minutes. To
         /// get up-to-date memberships for a project, fetch that project use GetProject(id)
@@ -123,6 +91,47 @@ namespace PivotalTracker.FluentAPI.Repository
 			return e.projects.Select(PivotalProjectRepository.CreateProject).ToList();
 		}
 
+        #endregion
+
+        #region create
+
+        protected static Project CreateProject(ProjectXmlResponse e)
+        {
+            var lProject = new Project
+                {
+                    Account = e.account,
+                    CurrentVelocity = e.current_velocity,
+                    Id = e.id,
+                    InitialVelocity = e.initial_velocity,
+                    IsAttachmentAllowed = e.allow_attachments,
+                    IsBugAndChoresEstimables = e.bugs_and_chores_are_estimatable,
+                    IsCommitModeActive = e.commit_mode,
+                    IsPublic = e.@public,
+                    IterationLength = e.iteration_length,
+                    StartDate = e.first_iteration_start_time,
+                    Name = e.name,
+                    NumberOfDoneIterationsToShow = e.number_of_done_iterations_to_show,
+                    PointScale = e.point_scale,
+                    UseHTTPS = e.use_https,
+                    VelocityScheme = e.velocity_scheme,
+                    WeekStartDay = e.week_start_day
+                };
+
+            if (e.labels != null) e.labels.Split(',').ToList().ForEach(i => lProject.Labels.Add(i.Trim()));
+            if (e.last_activity_at != null) lProject.LastActivityDate = e.last_activity_at;
+            
+            foreach (var i in e.integrations)
+                lProject.Integrations.Add(i);
+
+            foreach (var m in e.memberships)
+            {
+                m.ProjectRef.Name = lProject.Name;
+                m.ProjectRef.Id = lProject.Id;
+                lProject.Memberships.Add(m);
+            }
+
+            return lProject;
+        }
 
 		public Project CreateProject(Repository.PivotalProjectRepository.ProjectXmlRequest projectRequest)
 	   {
@@ -130,8 +139,8 @@ namespace PivotalTracker.FluentAPI.Repository
 
 			var e = this.RequestPivotal<ProjectXmlResponse>(path, projectRequest, "POST");
 			return PivotalProjectRepository.CreateProject(e);
-		}
+       }
 
-
-	}
+        #endregion
+    }
 }
