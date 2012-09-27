@@ -212,6 +212,7 @@ namespace PivotalTracker.FluentAPI.Repository
 			new string[] {"IDLE", "+1200", "Internation Date Line East"},
 			new string[] {"IDLW", "-1200", "Internation Date Line West"},
 			new string[] {"IST", "+0530", "Indian Standard"},
+			new string[] {"ICT", "+0700", "Indochina"},
 			new string[] {"IT", "+0330", "Iran"},
 			new string[] {"JST", "+0900", "Japan Standard"},
 			new string[] {"JT", "+0700", "Java"},
