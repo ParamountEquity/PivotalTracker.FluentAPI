@@ -10,8 +10,14 @@ namespace PivotalTracker.FluentAPI.Domain
     {
         public int Id { get; set; }
         public int Number { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime FinishDate { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime Finish { get; set; }
         public IList<Story> Stories { get; set; }
+        public float Team_Strength { get; set; }
+
+        public Iteration()
+        {
+            Stories = new List<Story>();
+        }
     }
 }

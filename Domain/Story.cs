@@ -39,6 +39,7 @@ namespace PivotalTracker.FluentAPI.Domain
         public string OwnedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? AcceptedDate { get; set; }
+        public DateTime? Deadline { get; set; }
         public IList<string> Labels { get; private set; }
 
         public IList<Attachment> Attachments { get; private set;}

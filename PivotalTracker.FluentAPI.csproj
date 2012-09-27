@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Xml.Linq" />
@@ -62,6 +63,8 @@
     <Compile Include="Domain\StoryTypeEnum.cs" />
     <Compile Include="Domain\Task.cs" />
     <Compile Include="Domain\Token.cs" />
+    <Compile Include="Exceptions\PivotalApiConfigException.cs" />
+    <Compile Include="Exceptions\PivotalApiException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DateTimeUTC.cs" />
     <Compile Include="Repository\IPivotalTrackerRepository.cs" />
@@ -90,10 +93,11 @@
     <Compile Include="Service\StoryCreationFacade.cs" />
     <Compile Include="Service\StoryFacade.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetPath)" "$(SolutionDir)\..\..\externals\PivotalTracker" /i /d /y /q  2&gt;&amp;1 1&gt;NUL
-xcopy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)\..\..\externals\PivotalTracker" /i /d /y /q  2&gt;&amp;1 1&gt;NUL</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

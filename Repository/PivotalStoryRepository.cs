@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -35,6 +35,7 @@ namespace PivotalTracker.FluentAPI.Repository
 			public string name { get; set; }
 			public string requested_by { get; set; }
 			public string owned_by { get; set; }
+            public DateTimeUTC deadline { get; set; }
 			public DateTimeUTC created_at { get; set; }
 			public DateTimeUTC updated_at { get; set; }
 			public DateTimeUTC accepted_at { get; set; }
@@ -132,6 +133,7 @@ namespace PivotalTracker.FluentAPI.Repository
 								 //Attachments =
 								 CreatedDate = e.created_at,
 								 UpdatedDate = e.updated_at,
+                                 Deadline = e.deadline,
 								 CurrentState = (StoryStateEnum) Enum.Parse(typeof (StoryStateEnum), e.current_state, true),
 								 Description = e.description,
 								 Estimate =  e.estimate,
@@ -219,7 +221,6 @@ namespace PivotalTracker.FluentAPI.Repository
 		{
 			var path = string.Format("/projects/{0}/stories?filter={1}", projectId, Uri.EscapeDataString(filter));
 			return GetStories(path);
-
 		}
 
 		public IEnumerable<Story> GetLimitedStories(int projectId, int offset, int limit)

@@ -1,8 +1,17 @@
 #Pivotal Tracker FluentAPI
 
-_Original repository: http://ptfluentapi.codeplex.com/_
+This is [PowerInbox](http://powerinbox.com/,"Visit PowerInbox's website")'s fork 
+of the PivotalTracker Fluent API for C#. It was forked from the [Plasmasoft project](http://ptfluentapi.codeplex.com/) on CodePlex.
 
-## What is it ?
+The main changes in this fork are:
+ 
+ - use of HTTPS API calls by default
+ - several fixes and improvements to story handling 
+ - support for task addition/update/removal
+ - better timezone handling
+ - support for iterations and memberships
+
+# What is it ?
 Pivotal Tracker FluentAPI is C# API that uses the Fluent pattern to connect to the PivotalTracker REST API.
 
 ## How to use it ?

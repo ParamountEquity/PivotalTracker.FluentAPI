@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using PivotalTracker.FluentAPI.Domain;
 using PivotalTracker.FluentAPI.Repository;
@@ -73,6 +74,24 @@ namespace PivotalTracker.FluentAPI.Service
             var lFacade = new ProjectFacade(this, lProject);
 
             return lFacade;
+        }
+
+        /// <summary>
+        /// Get a collection of all your projects
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ProjectFacade> GetAll()
+        {
+            if (_projectRepository == null)
+				_projectRepository = new PivotalProjectRepository(this.RootFacade.Token);
+
+            var lProjects = _projectRepository.GetProjects();
+            if (lProjects == null)
+                return null;
+
+            var lFacades = lProjects.Select(p => new ProjectFacade(this, p)).ToList();
+
+            return lFacades;
         }
 
         /// <summary>
