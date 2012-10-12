@@ -222,6 +222,7 @@ namespace PivotalTracker.FluentAPI.Repository
 			new string[] {"MEST", "+0200", "Middle European Summer"},
 			new string[] {"MEWT", "+0100", "Middle European Winter"},
 			new string[] {"MST", "-0700", "(US) Mountain Standard"},
+			new string[] {"MSK", "+0400", "Moscow Standard"},
 			new string[] {"MOUNTAIN", "-0700", "(US) Mountain Standard"},
 			new string[] {"MT", "+0800", "Moluccas"},
 			new string[] {"NDT", "-0230", "Newfoundland Daylight"},
